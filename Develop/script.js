@@ -8,39 +8,39 @@ var capitalVer;
 var lowerVer;
 var numberVer;
 var specialVer;
-var passLen;
+var passLength;
 
 
 /* Checks for user how long they want their password*/
 
 function askLength(){
-  passLen = prompt("How long would you like your password? (8-128 Characters)");
-  if(passLen > 128){
+  passLength = prompt("How long would you like your password? (8-128 Characters)");
+  if(passLength > 128){
   alert("Requirements are not fulfilled. Please make the password between 8 and 128 letters.");
   askLength();
   }
-  if(passLen < 8){
+  if(passLength < 8){
   alert("Requirements are not fulfilled.Please make the password between 8 and 128 letters.");
   askLength();
   }
-  else if(isNaN(passLen)){
+  else if(isNaN(passLength)){
   alert("Please make the password between 8 and 128 letters.");
   askLength();
   }
   else{
-  return passLen;
+  return passLength;
   }
 }
 
 /* Would let the user use capital letters in their password*/
 
-function checkCapital() {
+function askCapital() {
   capitalVer = prompt("Use a capital letter in your password! Type Yes or No.");
-  capitalVer = capitalCheck.toLowerCase();
+  capitalVer = capitalVer.toLowerCase();
   
   if(capitalVer === null || capitalVer === ""){
     alert ("Please choose Yes or No");
-      checkCapital();
+      askCapital();
   }
   else if (capitalVer === "yes") {
     capitalVer = true;
@@ -55,12 +55,12 @@ function checkCapital() {
 
 /* Would let the user use special charaters in their password*/
 
-function checkSpecial(){
+function askSpecial(){
   specialVer = prompt("Use a spcecial character in your password. Type Yes or No.");
   specialVer = specialVer.toLowerCase();
   if (specialVer === null | specialVer === ""){
     alert("Please type Yes or No");
-      checkSpecial();
+      askSpecial();
   }
   else if (specialVer === "yes"){
     specialVer = true;
@@ -75,12 +75,12 @@ function checkSpecial(){
 
 /*Would let the user use numbers characters in their password */
 
-function checkNumbers(){
+function askNumbers(){
   numberVer = prompt("Use a number in your passoword. Type Yes on No");
   numberVer = numberVer.toLowerCase();
   if(numberVer === null | numberVer === ""){
     alert("Please type Yes or No")
-    checkNumbers();
+    askNumbers();
   }
   else if (numberVer === "yes"){
     numberVer = true;
@@ -96,43 +96,50 @@ function checkNumbers(){
 
 /* This will generate a password for the user */
 function generatePassword() {
-  checkLength();
-  console.log(passLen);
-  checkUpper();
+  askLength();
+  console.log(passLength);
+  askCapital();
   console.log(capitalVer);
-  checkNumbers();
+  askNumbers();
   console.log(numberVer);
-  checkSpecial();
+  askSpecial();
   console.log(specialVer);
 
 var password = "";
-var characters = lowerChar;
+var characters = lowerLet;
 if (capitalVer && specialVer && numberVer ){
   characters += capitalLet + numbers + specialLet;
 
 }
 else if (capitalVer && numberVer){
   characters += capitalLet + numbers;
-}
-else if (capitalVer && specialVer){
-  characters += capitalLet + specialLet;
+
 }
 else if (numberVer && specialVer){
   characters += numbers + specialLet;
+
+}
+else if (capitalVer && specialVer){
+  characters += capitalLet + specialLet;
+
 }
 else if (capitalVer){
   characters += capitalLet;
-}
-else if (specialVer){
-  characters += specialLet;
+
 }
 else if(numberVer){
   characters += numbers;
+
 }
-else{characters === lowerLet;
+else if (specialVer){
+  characters += specialLet;
+
+}
+else{
+  characters === lowerLet;
 }
 
-  for(var i = 0; i < passLen; i++){
+for(var i = 0; i < passLength; i++){
     password += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return password;
@@ -150,4 +157,4 @@ function writePassword() {
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword)
+generateBtn.addEventListener("click", writePassword);
